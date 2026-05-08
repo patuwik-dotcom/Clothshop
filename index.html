@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Andrea Studio | Curated Apparel</title>
+  <style>
+    :root {
+      --ink: #1f2933;
+      --muted: #667085;
+      --line: #e4e7ec;
+      --paper: #ffffff;
+      --soft: #f6f7f9;
+      --charcoal: #263238;
+      --sage: #7f9183;
+      --rose: #b56f62;
+      --gold: #c49a4a;
+      --shadow: 0 18px 45px rgba(31, 41, 51, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--soft);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(255, 255, 255, 0.92);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(14px);
+    }
+
+    .nav {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      color: var(--charcoal);
+      text-decoration: none;
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .brand span {
+      color: var(--rose);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.94rem;
+      font-weight: 700;
+    }
+
+    .cart-pill {
+      min-height: 42px;
+      border: 1px solid var(--charcoal);
+      border-radius: 999px;
+      background: var(--charcoal);
+      color: #fff;
+      padding: 0 16px;
+      font-weight: 800;
+    }
+
+    .hero {
+      padding: 38px 0 30px;
+      background:
+        linear-gradient(110deg, rgba(38, 50, 56, 0.86), rgba(38, 50, 56, 0.28)),
+        url("9.jpg") center 35% / cover;
+      color: #fff;
+      min-height: 430px;
+      display: flex;
+      align-items: end;
+    }
+
+    .hero-content {
+      width: min(670px, 100%);
+      padding: 46px 0;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 12ch;
+      font-size: clamp(2.55rem, 7vw, 5.7rem);
+      line-height: 0.96;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      max-width: 560px;
+      margin: 18px 0 0;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 1.08rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .button {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 0 18px;
+      text-decoration: none;
+      font-weight: 800;
+      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button-primary {
+      background: var(--rose);
+      color: #fff;
+      box-shadow: 0 16px 32px rgba(181, 111, 98, 0.26);
+    }
+
+    .button-secondary {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.42);
+    }
+
+    .section {
+      padding: 42px 0;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 22px;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: clamp(1.55rem, 4vw, 2.35rem);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .section-copy {
+      max-width: 520px;
+      margin: 8px 0 0;
+      color: var(--muted);
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: minmax(180px, 1fr) 180px;
+      gap: 12px;
+      width: min(520px, 100%);
+    }
+
+    .control {
+      width: 100%;
+      min-height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      padding: 0 12px;
+      outline: none;
+    }
+
+    .control:focus,
+    .field:focus {
+      border-color: var(--rose);
+      box-shadow: 0 0 0 4px rgba(181, 111, 98, 0.14);
+    }
+
+    .shop-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      align-items: start;
+      gap: 22px;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .product-grid > .empty {
+      grid-column: 1 / -1;
+    }
+
+    .product-card,
+    .panel {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 10px 28px rgba(31, 41, 51, 0.07);
+    }
+
+    .product-card {
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+    }
+
+    .product-media {
+      aspect-ratio: 4 / 3;
+      background: #dde2e6;
+      overflow: hidden;
+    }
+
+    .product-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 220ms ease;
+    }
+
+    .product-card:hover .product-media img {
+      transform: scale(1.035);
+    }
+
+    .product-body {
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 10px;
+    }
+
+    .product-meta {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .product-title {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.25;
+    }
+
+    .product-price {
+      color: var(--rose);
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .product-desc {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .card-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin-top: auto;
+    }
+
+    .ghost-button,
+    .solid-button,
+    .line-button {
+      min-height: 42px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      padding: 0 12px;
+      font-weight: 800;
+    }
+
+    .solid-button {
+      background: var(--charcoal);
+      color: #fff;
+      border-color: var(--charcoal);
+    }
+
+    .ghost-button {
+      background: #fff;
+      color: var(--charcoal);
+    }
+
+    .line-button {
+      background: transparent;
+      color: var(--charcoal);
+    }
+
+    .cart-panel {
+      position: sticky;
+      top: 94px;
+      overflow: hidden;
+    }
+
+    .panel-head {
+      padding: 16px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+
+    .cart-count {
+      border-radius: 999px;
+      background: #edf4ee;
+      color: #3d6045;
+      padding: 5px 10px;
+      font-size: 0.82rem;
+      font-weight: 900;
+    }
+
+    .cart-list {
+      max-height: 390px;
+      overflow: auto;
+      padding: 14px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 12px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 12px;
+    }
+
+    .cart-item:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .cart-thumb {
+      width: 64px;
+      height: 72px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #e5e7eb;
+    }
+
+    .cart-item h4 {
+      margin: 0;
+      font-size: 0.94rem;
+    }
+
+    .cart-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 7px;
+    }
+
+    .qty {
+      display: inline-grid;
+      grid-template-columns: 30px 34px 30px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .qty button {
+      width: 30px;
+      height: 30px;
+      border: 0;
+      background: #fff;
+      color: var(--ink);
+      font-weight: 900;
+    }
+
+    .qty span {
+      text-align: center;
+      font-size: 0.86rem;
+      font-weight: 800;
+    }
+
+    .remove {
+      border: 0;
+      background: transparent;
+      color: var(--rose);
+      font-weight: 800;
+      padding: 0;
+    }
+
+    .empty {
+      padding: 26px 16px;
+      color: var(--muted);
+      text-align: center;
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+      background: #fbfcfd;
+    }
+
+    .summary {
+      padding: 16px;
+      border-top: 1px solid var(--line);
+      display: grid;
+      gap: 10px;
+    }
+
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+    }
+
+    .summary-line strong {
+      color: var(--ink);
+    }
+
+    .grand-total {
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+      font-size: 1.16rem;
+    }
+
+    .checkout {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .steps {
+      display: grid;
+      gap: 12px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .step-number {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: #edf4ee;
+      color: #3d6045;
+      font-weight: 900;
+    }
+
+    .step h3 {
+      margin: 0 0 3px;
+      font-size: 1rem;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .checkout-form {
+      padding: 18px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .form-group {
+      display: grid;
+      gap: 6px;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      color: var(--charcoal);
+      font-size: 0.86rem;
+      font-weight: 800;
+    }
+
+    .field {
+      width: 100%;
+      min-height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      padding: 10px 12px;
+      outline: none;
+    }
+
+    textarea.field {
+      min-height: 92px;
+      resize: vertical;
+    }
+
+    .notice {
+      display: none;
+      padding: 14px;
+      border: 1px solid #b9d9c2;
+      border-radius: 8px;
+      background: #eff8f1;
+      color: #315c3b;
+      font-weight: 800;
+    }
+
+    .notice.show {
+      display: block;
+    }
+
+    footer {
+      padding: 34px 0;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      background: #fff;
+    }
+
+    @media (max-width: 980px) {
+      .section-head,
+      .checkout,
+      .shop-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .cart-panel {
+        position: static;
+      }
+
+      .product-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .shell {
+        width: min(100% - 22px, 1180px);
+      }
+
+      .nav {
+        min-height: auto;
+        padding: 14px 0;
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .nav-actions {
+        justify-content: space-between;
+      }
+
+      .hero {
+        min-height: 390px;
+      }
+
+      .hero-content {
+        padding: 34px 0;
+      }
+
+      .toolbar,
+      .product-grid,
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-link {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="shell nav">
+      <a class="brand" href="#home">Andrea <span>Studio</span></a>
+      <div class="nav-actions">
+        <a class="nav-link" href="#collection">Collection</a>
+        <a class="nav-link" href="#checkout">Order Process</a>
+        <button class="cart-pill" type="button" onclick="scrollToCart()">Cart <span id="navCartCount">0</span></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="shell hero-content">
+        <p class="eyebrow">Curated daily wear</p>
+        <h1>Andrea Studio</h1>
+        <p>Clean silhouettes, soft textures, and versatile pieces selected for easy everyday styling.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#collection">Shop Collection</a>
+          <a class="button button-secondary" href="#checkout">Start Order</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="collection">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">New Collection</h2>
+            <p class="section-copy">Browse pieces, add quantities to your cart, then complete the order form below.</p>
+          </div>
+          <div class="toolbar" aria-label="Catalog filters">
+            <input class="control" id="searchInput" type="search" placeholder="Search products" oninput="renderProducts()">
+            <select class="control" id="sortSelect" onchange="renderProducts()">
+              <option value="featured">Featured</option>
+              <option value="name">Name A-Z</option>
+              <option value="priceLow">Price: Low to High</option>
+              <option value="priceHigh">Price: High to Low</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="shop-layout">
+          <div class="product-grid" id="productList"></div>
+
+          <aside class="panel cart-panel" id="cartSection" aria-label="Shopping cart">
+            <div class="panel-head">
+              <h2 class="panel-title">Cart</h2>
+              <span class="cart-count" id="cartCount">0 items</span>
+            </div>
+            <div class="cart-list" id="cartList"></div>
+            <div class="summary">
+              <div class="summary-line">
+                <span>Subtotal</span>
+                <strong id="subtotal">PHP 0</strong>
+              </div>
+              <div class="summary-line">
+                <span>Delivery</span>
+                <strong id="delivery">PHP 0</strong>
+              </div>
+              <div class="summary-line grand-total">
+                <span>Total</span>
+                <strong id="grandTotal">PHP 0</strong>
+              </div>
+              <button class="solid-button" type="button" onclick="scrollToCheckout()">Proceed to Order</button>
+              <button class="line-button" type="button" onclick="clearCart()">Clear Cart</button>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="checkout">
+      <div class="shell checkout">
+        <div>
+          <h2 class="section-title">Order Process</h2>
+          <p class="section-copy">A simple three-step checkout keeps the order clear before Andrea confirms availability and delivery.</p>
+          <div class="steps" style="margin-top: 18px;">
+            <div class="step">
+              <div class="step-number">1</div>
+              <div>
+                <h3>Add to cart</h3>
+                <p>Choose products and adjust quantities in the cart section.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-number">2</div>
+              <div>
+                <h3>Send order details</h3>
+                <p>Enter your contact, address, delivery option, and payment preference.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-number">3</div>
+              <div>
+                <h3>Confirm and prepare</h3>
+                <p>Your order summary is saved locally and ready for final confirmation.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <form class="panel checkout-form" id="orderForm">
+          <div class="notice" id="orderNotice"></div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="customerName">Full name</label>
+              <input class="field" id="customerName" name="customerName" type="text" required>
+            </div>
+            <div class="form-group">
+              <label for="customerPhone">Phone number</label>
+              <input class="field" id="customerPhone" name="customerPhone" type="tel" required>
+            </div>
+            <div class="form-group full">
+              <label for="customerAddress">Delivery address</label>
+              <textarea class="field" id="customerAddress" name="customerAddress" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="deliveryOption">Delivery option</label>
+              <select class="field" id="deliveryOption" name="deliveryOption">
+                <option value="Standard delivery">Standard delivery</option>
+                <option value="Priority delivery">Priority delivery</option>
+                <option value="Store pickup">Store pickup</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="paymentMethod">Payment method</label>
+              <select class="field" id="paymentMethod" name="paymentMethod">
+                <option value="Cash on delivery">Cash on delivery</option>
+                <option value="GCash">GCash</option>
+                <option value="Bank transfer">Bank transfer</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label for="orderNotes">Order notes</label>
+              <textarea class="field" id="orderNotes" name="orderNotes" placeholder="Size, color, or delivery notes"></textarea>
+            </div>
+          </div>
+          <button class="solid-button" type="submit">Place Order</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell">Andrea Studio &copy; 2026. Curated apparel storefront.</div>
+  </footer>
+
+  <script>
+    const products = [
+      { id: 1, title: "Linen Day Blouse", image: "1.jpg", price: 1290, description: "Lightweight linen blend with a relaxed, polished drape." },
+      { id: 2, title: "Structured Denim Top", image: "2.jpg", price: 1490, description: "Durable denim texture styled for casual weekday wear." },
+      { id: 3, title: "Soft Fleece Pullover", image: "3.jpg", price: 1590, description: "Warm brushed interior with a comfortable easy fit." },
+      { id: 4, title: "Knit Everyday Tee", image: "4.jpg", price: 990, description: "Smooth knit fabric designed for breathable layering." },
+      { id: 5, title: "Air Linen Shirt", image: "5.jpg", price: 1390, description: "Cool, airy fabric with a clean tailored profile." },
+      { id: 6, title: "Stretch Lounge Set", image: "6.jpg", price: 1690, description: "Soft stretch fabric made for movement and comfort." },
+      { id: 7, title: "Woven Office Blouse", image: "7.jpg", price: 1450, description: "Fine woven finish for a refined semi-formal look." },
+      { id: 8, title: "Utility Pocket Vest", image: "8.jpg", price: 1780, description: "Functional pocket detail with a neat modern shape." },
+      { id: 9, title: "Cozy Knit Cardigan", image: "9.jpg", price: 1890, description: "Soft textured knit for cool evenings and travel days." },
+      { id: 10, title: "Active Rib Top", image: "10.jpg", price: 1180, description: "Breathable stretch fabric for light activity and errands." },
+      { id: 11, title: "Brushed Casual Top", image: "11.jpg", price: 1190, description: "Soft hand-feel with a relaxed weekend silhouette." },
+      { id: 12, title: "Light Twill Shirt", image: "12.jpg", price: 1320, description: "Lightweight twill with a crisp, easy-care finish." },
+      { id: 13, title: "Sleeveless Cotton Top", image: "13.jpg", price: 890, description: "Minimal cotton staple for warm days and layering." },
+      { id: 14, title: "Zip Jacket", image: "14.jpg", price: 1990, description: "Smooth outer layer with a clean zip-front construction." },
+      { id: 15, title: "Loose Cotton Tunic", image: "15.jpg", price: 1280, description: "Breathable cotton cut with a soft, relaxed shape." },
+      { id: 16, title: "Comfort Waist Pants", image: "16.jpg", price: 1580, description: "Elastic waistband pants made for all-day comfort." },
+      { id: 17, title: "Soft Casual Dress", image: "17.jpg", price: 1790, description: "Simple one-piece styling with a comfortable fabric feel." }
+    ];
+
+    const currency = new Intl.NumberFormat("en-PH", {
+      style: "currency",
+      currency: "PHP",
+      maximumFractionDigits: 0
+    });
+
+    let cart = loadCart();
+
+    function loadCart() {
+      const savedCart = JSON.parse(localStorage.getItem("andreaCart")) || [];
+      if (savedCart.length) return savedCart;
+
+      const oldCart = JSON.parse(localStorage.getItem("cart")) || [];
+      if (!oldCart.length) return [];
+
+      const migratedCart = oldCart.reduce((items, oldItem) => {
+        const product = products.find((item) => item.image === oldItem.image || item.title === oldItem.title);
+        if (!product) return items;
+
+        const existing = items.find((item) => item.id === product.id);
+        if (existing) {
+          existing.quantity += 1;
+        } else {
+          items.push({ ...product, quantity: 1 });
+        }
+
+        return items;
+      }, []);
+
+      localStorage.setItem("andreaCart", JSON.stringify(migratedCart));
+      localStorage.removeItem("cart");
+      return migratedCart;
+    }
+
+    function formatMoney(value) {
+      return currency.format(value).replace("PHP", "PHP ");
+    }
+
+    function saveCart() {
+      localStorage.setItem("andreaCart", JSON.stringify(cart));
+    }
+
+    function renderProducts() {
+      const search = document.getElementById("searchInput").value.trim().toLowerCase();
+      const sort = document.getElementById("sortSelect").value;
+      const productList = document.getElementById("productList");
+
+      let visibleProducts = products.filter((product) => {
+        return product.title.toLowerCase().includes(search) || product.description.toLowerCase().includes(search);
+      });
+
+      if (sort === "name") visibleProducts.sort((a, b) => a.title.localeCompare(b.title));
+      if (sort === "priceLow") visibleProducts.sort((a, b) => a.price - b.price);
+      if (sort === "priceHigh") visibleProducts.sort((a, b) => b.price - a.price);
+
+      productList.innerHTML = visibleProducts.map((product) => `
+        <article class="product-card">
+          <div class="product-media">
+            <img src="${product.image}" alt="${product.title}">
+          </div>
+          <div class="product-body">
+            <div class="product-meta">
+              <h3 class="product-title">${product.title}</h3>
+              <span class="product-price">${formatMoney(product.price)}</span>
+            </div>
+            <p class="product-desc">${product.description}</p>
+            <div class="card-actions">
+              <button class="solid-button" type="button" onclick="addToCart(${product.id})">Add to Cart</button>
+            </div>
+          </div>
+        </article>
+      `).join("");
+
+      if (!visibleProducts.length) {
+        productList.innerHTML = '<div class="empty">No products matched your search.</div>';
+      }
+    }
+
+    function addToCart(productId) {
+      const product = products.find((item) => item.id === productId);
+      const existing = cart.find((item) => item.id === productId);
+
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({ ...product, quantity: 1 });
+      }
+
+      saveCart();
+      renderCart();
+    }
+
+    function updateQuantity(productId, change) {
+      const item = cart.find((cartItem) => cartItem.id === productId);
+      if (!item) return;
+
+      item.quantity += change;
+      if (item.quantity <= 0) {
+        cart = cart.filter((cartItem) => cartItem.id !== productId);
+      }
+
+      saveCart();
+      renderCart();
+    }
+
+    function removeItem(productId) {
+      cart = cart.filter((cartItem) => cartItem.id !== productId);
+      saveCart();
+      renderCart();
+    }
+
+    function clearCart() {
+      cart = [];
+      localStorage.removeItem("andreaCart");
+      renderCart();
+    }
+
+    function getCartTotals() {
+      const items = cart.reduce((sum, item) => sum + item.quantity, 0);
+      const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      const delivery = subtotal > 0 ? 120 : 0;
+      const total = subtotal + delivery;
+      return { items, subtotal, delivery, total };
+    }
+
+    function renderCart() {
+      const cartList = document.getElementById("cartList");
+      const totals = getCartTotals();
+
+      document.getElementById("navCartCount").textContent = totals.items;
+      document.getElementById("cartCount").textContent = `${totals.items} ${totals.items === 1 ? "item" : "items"}`;
+      document.getElementById("subtotal").textContent = formatMoney(totals.subtotal);
+      document.getElementById("delivery").textContent = formatMoney(totals.delivery);
+      document.getElementById("grandTotal").textContent = formatMoney(totals.total);
+
+      if (!cart.length) {
+        cartList.innerHTML = '<div class="empty">Your cart is empty.</div>';
+        return;
+      }
+
+      cartList.innerHTML = cart.map((item) => `
+        <div class="cart-item">
+          <img class="cart-thumb" src="${item.image}" alt="${item.title}">
+          <div>
+            <h4>${item.title}</h4>
+            <div class="cart-row">
+              <span>${formatMoney(item.price)}</span>
+              <div class="qty" aria-label="Quantity controls for ${item.title}">
+                <button type="button" onclick="updateQuantity(${item.id}, -1)">-</button>
+                <span>${item.quantity}</span>
+                <button type="button" onclick="updateQuantity(${item.id}, 1)">+</button>
+              </div>
+            </div>
+            <div class="cart-row">
+              <strong>${formatMoney(item.price * item.quantity)}</strong>
+              <button class="remove" type="button" onclick="removeItem(${item.id})">Remove</button>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function scrollToCart() {
+      document.getElementById("cartSection").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function scrollToCheckout() {
+      document.getElementById("checkout").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    document.getElementById("orderForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const notice = document.getElementById("orderNotice");
+      const totals = getCartTotals();
+
+      if (!cart.length) {
+        notice.textContent = "Please add at least one item to the cart before placing an order.";
+        notice.classList.add("show");
+        scrollToCart();
+        return;
+      }
+
+      const formData = new FormData(event.currentTarget);
+      const order = {
+        customerName: formData.get("customerName"),
+        customerPhone: formData.get("customerPhone"),
+        customerAddress: formData.get("customerAddress"),
+        deliveryOption: formData.get("deliveryOption"),
+        paymentMethod: formData.get("paymentMethod"),
+        orderNotes: formData.get("orderNotes"),
+        items: cart,
+        totals,
+        createdAt: new Date().toISOString()
+      };
+
+      localStorage.setItem("andreaLastOrder", JSON.stringify(order));
+      notice.textContent = `Order received. Total: ${formatMoney(totals.total)}. Andrea Studio will confirm availability and delivery details.`;
+      notice.classList.add("show");
+      clearCart();
+      event.currentTarget.reset();
+    });
+
+    renderProducts();
+    renderCart();
+  </script>
+</body>
+</html>
